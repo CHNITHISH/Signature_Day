@@ -97,7 +97,7 @@
             
             <button type="button" class="btn btn-wallet w-100" onclick="openGooglePay()">Pay with Google Pay</button>
             <button type="button" class="btn btn-wallet w-100" onclick="openPhonePe()">Pay with PhonePe</button>
-            <button type="button" class="btn btn-wallet w-100" onclick="openPaytm()" >Pay with Paytm</button>
+            <button type="button" class="btn btn-wallet w-100" onclick="openPaytm()">Pay with Paytm</button>
         </form>
     </div>
 
@@ -107,47 +107,40 @@
     </footer>
 
     <script>
-        document.getElementById('payButton').addEventListener('click', async function() {
-            const form = document.getElementById('detailsForm');
-            const formData = new FormData(form);
-
-            const orderRes = await fetch('/create_order', { method: 'POST' });
-            const orderData = await orderRes.json();
-
-            const options = {
-                key: "rzp_test_tBShEJdYWLgAzr",
-                amount: 15000,
-                currency: "INR",
-                name: "Signature Day",
-                description: "Event Payment",
-                order_id: orderData.order_id,
-                handler: function(response) {
-                    fetch('/submit', {
-                        method: 'POST',
-                        body: formData
-                    }).then(() => window.location.href = '/success');
-                },
-                prefill: {
-                    name: formData.get('name')
-                },
-                theme: {
-                    color: "#ff6f61"
-                }
-            };
-            const rzp = new Razorpay(options);
-            rzp.open();
-        });
-
         function openGooglePay() {
-            window.location.href = 'upi://pay?pa=chnithish777@okaxis&pn=SignatureDay&mc=0000&tid=1234567890&tr=ORDERID12345&tn=SignatureDay%20Payment&am=150&cu=INR';
+            let googlePayLink = 'upi://pay?pa=chnithish777@okaxis&pn=SignatureDay&mc=0000&tid=1234567890&tr=ORDERID12345&tn=SignatureDay%20Payment&am=150&cu=INR';
+            window.location.href = googlePayLink;
+            
+            setTimeout(function() {
+                if (!document.hasFocus()) {
+                    alert('Google Pay is not installed. Please install Google Pay to complete the payment.');
+                    window.location.href = 'https://play.google.com/store/apps/details?id=com.google.android.apps.nbu.paisa.user';
+                }
+            }, 2000);
         }
 
         function openPhonePe() {
-            window.location.href = 'phonepe://pay?pa=chnithish777@okaxis&pn=SignatureDay&mc=0000&tid=1234567890&tr=ORDERID12345&tn=SignatureDay%20Payment&am=150&cu=INR';
+            let phonePeLink = 'phonepe://pay?pa=chnithish777@okaxis&pn=SignatureDay&mc=0000&tid=1234567890&tr=ORDERID12345&tn=SignatureDay%20Payment&am=150&cu=INR';
+            window.location.href = phonePeLink;
+
+            setTimeout(function() {
+                if (!document.hasFocus()) {
+                    alert('PhonePe is not installed. Please install PhonePe to complete the payment.');
+                    window.location.href = 'https://play.google.com/store/apps/details?id=com.phonepe.app';
+                }
+            }, 2000);
         }
 
         function openPaytm() {
-            window.location.href = 'paytmmp://pay?pa=chnithish777@okaxis&pn=SignatureDay&mc=0000&tid=1234567890&tr=ORDERID12345&tn=SignatureDay%20Payment&am=150&cu=INR';
+            let paytmLink = 'paytmmp://pay?pa=chnithish777@okaxis&pn=SignatureDay&mc=0000&tid=1234567890&tr=ORDERID12345&tn=SignatureDay%20Payment&am=150&cu=INR';
+            window.location.href = paytmLink;
+
+            setTimeout(function() {
+                if (!document.hasFocus()) {
+                    alert('Paytm is not installed. Please install Paytm to complete the payment.');
+                    window.location.href = 'https://play.google.com/store/apps/details?id=net.one97.paytm';
+                }
+            }, 2000);
         }
     </script>
 </body>
