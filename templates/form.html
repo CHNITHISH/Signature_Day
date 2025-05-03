@@ -77,8 +77,7 @@
                 <input type="text" class="form-control" name="name" placeholder="Your Name" required>
             </div>
             <div class="mb-3">
-                <label for="image" class="form-label">Upload your image</label>
-                <input type="file" class="form-control" name="image" required>
+                <input type="number" class="form-control" name="roll" placeholder="Roll Number (Last 2 digits, max 78)" min="0" max="78" required>
             </div>
             <div class="mb-3">
                 <select class="form-select" name="size" required>
@@ -92,8 +91,10 @@
                 </select>
             </div>
             <div class="mb-3">
+                <label for="image" class="form-label">Upload your image</label>
                 <input type="file" class="form-control" name="image" required>
             </div>
+            
             <button type="button" class="btn btn-wallet w-100" onclick="openGooglePay()">Pay with Google Pay</button>
             <button type="button" class="btn btn-wallet w-100" onclick="openPhonePe()">Pay with PhonePe</button>
             <button type="button" class="btn btn-wallet w-100" onclick="openPaytm()" >Pay with Paytm</button>
