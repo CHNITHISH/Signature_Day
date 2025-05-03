@@ -26,11 +26,22 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
         .btn-pay {
+            color: #fff;
             background: #ff6f61;
             border: none;
+            margin-bottom: 10px;
         }
         .btn-pay:hover {
             background: #ff3b2e;
+        }
+        .btn-wallet {
+            background: #4285F4;
+            border: none;
+            margin: 5px 0;
+            color: #fff;
+        }
+        .btn-wallet:hover {
+            background: #3367D6;
         }
         h1 {
             font-weight: bold;
@@ -82,7 +93,9 @@
             <div class="mb-3">
                 <input type="file" class="form-control" name="image" required>
             </div>
-            <button type="button" class="btn btn-pay w-100" id="payButton">Pay ₹150</button>
+            <button type="button" class="btn btn-wallet w-100" onclick="openGooglePay()">Pay with Google Pay</button>
+            <button type="button" class="btn btn-wallet w-100" onclick="openPhonePe()">Pay with PhonePe</button>
+            <button type="button" class="btn btn-wallet w-100" onclick="openPaytm()" >Pay with Paytm</button>
         </form>
     </div>
 
@@ -122,6 +135,18 @@
             const rzp = new Razorpay(options);
             rzp.open();
         });
+
+        function openGooglePay() {
+            window.location.href = 'upi://pay?pa=chnithish777@okaxis&pn=SignatureDay&mc=0000&tid=1234567890&tr=ORDERID12345&tn=SignatureDay%20Payment&am=150&cu=INR';
+        }
+
+        function openPhonePe() {
+            window.location.href = 'phonepe://pay?pa=chnithish777@okaxis&pn=SignatureDay&mc=0000&tid=1234567890&tr=ORDERID12345&tn=SignatureDay%20Payment&am=150&cu=INR';
+        }
+
+        function openPaytm() {
+            window.location.href = 'paytmmp://pay?pa=chnithish777@okaxis&pn=SignatureDay&mc=0000&tid=1234567890&tr=ORDERID12345&tn=SignatureDay%20Payment&am=150&cu=INR';
+        }
     </script>
 </body>
 </html>
