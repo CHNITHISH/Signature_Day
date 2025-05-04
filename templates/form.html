@@ -35,7 +35,6 @@
             background: #ff3b2e;
         }
         .btn-wallet {
-<<<<<<< HEAD
     background: linear-gradient(135deg, #ffb74d, #fbc02d); /* Gradient background */
     border: none;
     margin: 10px 0;
@@ -66,15 +65,6 @@
         .payment-btns img {
             height: 20px;
             margin-right: 10px;
-=======
-            background: #4285F4;
-            border: none;
-            margin: 5px 0;
-            color: #fff;
-        }
-        .btn-wallet:hover {
-            background: #3367D6;
->>>>>>> 3dec70f5b84b84ce07350e573b2d79ae0aba8736
         }
         h1 {
             font-weight: bold;
@@ -127,7 +117,6 @@
                 <label for="image" class="form-label">Upload your image</label>
                 <input type="file" class="form-control" name="image" required>
             </div>
-<<<<<<< HEAD
 
             <!-- Buttons for payment methods with logos -->
             <div class="payment-btns">
@@ -141,12 +130,6 @@
                     <img src="{{ url_for('static', filename='images/paytm.png') }}" alt="Paytm"> Pay with Paytm
                 </button>
             </div>
-=======
-            
-            <button type="button" class="btn btn-wallet w-100" onclick="openGooglePay()">Pay with Google Pay</button>
-            <button type="button" class="btn btn-wallet w-100" onclick="openPhonePe()">Pay with PhonePe</button>
-            <button type="button" class="btn btn-wallet w-100" onclick="openPaytm()">Pay with Paytm</button>
->>>>>>> 3dec70f5b84b84ce07350e573b2d79ae0aba8736
         </form>
 
         <!-- QR Code Button -->
@@ -206,14 +189,11 @@
                 }
             }, 2000);
         }
-<<<<<<< HEAD
 
         function toggleQRCode() {
             const qrCodeSection = document.getElementById('qrCodeSection');
             qrCodeSection.style.display = (qrCodeSection.style.display === 'none') ? 'block' : 'none';
         }
-=======
->>>>>>> 3dec70f5b84b84ce07350e573b2d79ae0aba8736
     </script>
 </body>
 </html>
