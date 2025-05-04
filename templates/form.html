@@ -26,11 +26,45 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
         .btn-pay {
+            color: #fff;
             background: #ff6f61;
             border: none;
+            margin-bottom: 10px;
         }
         .btn-pay:hover {
             background: #ff3b2e;
+        }
+        .btn-wallet {
+    background: linear-gradient(135deg, #ffb74d, #fbc02d); /* Gradient background */
+    border: none;
+    margin: 10px 0;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px; /* Add some padding for better spacing */
+    font-size: 16px; /* Adjust the font size for better readability */
+    border-radius: 25px; /* Rounded corners for a modern look */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    cursor: pointer;
+}
+
+.btn-wallet:hover {
+    background: linear-gradient(135deg, #fbc02d, #ffb74d); /* Reverse gradient on hover */
+    transform: translateY(-2px); /* Lift the button up on hover */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); /* Add a stronger shadow on hover */
+}
+
+.btn-wallet:active {
+    background: #fbc02d; /* Solid color on active click */
+    transform: translateY(2px); /* Add a slight press-down effect */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Reduce shadow on active click */
+}
+
+        .payment-btns img {
+            height: 20px;
+            margin-right: 10px;
         }
         h1 {
             font-weight: bold;
@@ -80,10 +114,38 @@
                 </select>
             </div>
             <div class="mb-3">
+                <label for="image" class="form-label">Upload your image</label>
                 <input type="file" class="form-control" name="image" required>
             </div>
-            <button type="button" class="btn btn-pay w-100" id="payButton">Pay ₹150</button>
+
+            <!-- Buttons for payment methods with logos -->
+            <div class="payment-btns">
+                <button type="button" class="btn btn-wallet w-100" onclick="openGooglePay()">
+                    <img src="{{ url_for('static', filename='images/gpay.png') }}" alt="Google Pay"> Pay with Google Pay
+                </button>
+                <button type="button" class="btn btn-wallet w-100" onclick="openPhonePe()">
+                    <img src="{{ url_for('static', filename='images/phonepay.png') }}" alt="PhonePe"> Pay with PhonePe
+                </button>
+                <button type="button" class="btn btn-wallet w-100" onclick="openPaytm()">
+                    <img src="{{ url_for('static', filename='images/paytm.png') }}" alt="Paytm"> Pay with Paytm
+                </button>
+            </div>
         </form>
+
+        <!-- QR Code Button -->
+        <div class="text-center mt-4">
+            <button type="button" class="btn btn-secondary" onclick="toggleQRCode()">Pay with QR Code</button>
+        </div>
+
+        <div id="qrCodeSection" class="mt-4" style="display:none;">
+            <div class="text-center">
+                <img src="{{ url_for('static', filename='qr.jpg') }}" alt="QR Code" class="img-fluid">
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="screenshot" class="form-label">Upload Payment Screenshot (Compulsory if QR Code selected)</label>
+                <input type="file" class="form-control" name="screenshot" id="screenshot" required>
+            </div>
+        </div>
     </div>
 
     <footer>
@@ -92,36 +154,46 @@
     </footer>
 
     <script>
-        document.getElementById('payButton').addEventListener('click', async function() {
-            const form = document.getElementById('detailsForm');
-            const formData = new FormData(form);
-
-            const orderRes = await fetch('/create_order', { method: 'POST' });
-            const orderData = await orderRes.json();
-
-            const options = {
-                key: "rzp_test_tBShEJdYWLgAzr",
-                amount: 15000,
-                currency: "INR",
-                name: "Signature Day",
-                description: "Event Payment",
-                order_id: orderData.order_id,
-                handler: function(response) {
-                    fetch('/submit', {
-                        method: 'POST',
-                        body: formData
-                    }).then(() => window.location.href = '/success');
-                },
-                prefill: {
-                    name: formData.get('name')
-                },
-                theme: {
-                    color: "#ff6f61"
+        function openGooglePay() {
+            let googlePayLink = 'upi://pay?pa=chnithish777@okaxis&pn=SignatureDay&mc=0000&tid=1234567890&tr=ORDERID12345&tn=SignatureDay%20Payment&am=150&cu=INR';
+            window.location.href = googlePayLink;
+            
+            setTimeout(function() {
+                if (!document.hasFocus()) {
+                    alert('Google Pay is not installed. Please install Google Pay to complete the payment.');
+                    window.location.href = 'https://play.google.com/store/apps/details?id=com.google.android.apps.nbu.paisa.user';
                 }
-            };
-            const rzp = new Razorpay(options);
-            rzp.open();
-        });
+            }, 2000);
+        }
+
+        function openPhonePe() {
+            let phonePeLink = 'phonepe://pay?pa=chnithish777@okaxis&pn=SignatureDay&mc=0000&tid=1234567890&tr=ORDERID12345&tn=SignatureDay%20Payment&am=150&cu=INR';
+            window.location.href = phonePeLink;
+
+            setTimeout(function() {
+                if (!document.hasFocus()) {
+                    alert('PhonePe is not installed. Please install PhonePe to complete the payment.');
+                    window.location.href = 'https://play.google.com/store/apps/details?id=com.phonepe.app';
+                }
+            }, 2000);
+        }
+
+        function openPaytm() {
+            let paytmLink = 'paytmmp://pay?pa=chnithish777@okaxis&pn=SignatureDay&mc=0000&tid=1234567890&tr=ORDERID12345&tn=SignatureDay%20Payment&am=150&cu=INR';
+            window.location.href = paytmLink;
+
+            setTimeout(function() {
+                if (!document.hasFocus()) {
+                    alert('Paytm is not installed. Please install Paytm to complete the payment.');
+                    window.location.href = 'https://play.google.com/store/apps/details?id=net.one97.paytm';
+                }
+            }, 2000);
+        }
+
+        function toggleQRCode() {
+            const qrCodeSection = document.getElementById('qrCodeSection');
+            qrCodeSection.style.display = (qrCodeSection.style.display === 'none') ? 'block' : 'none';
+        }
     </script>
 </body>
 </html>
